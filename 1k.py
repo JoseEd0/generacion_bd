@@ -8,20 +8,45 @@ import uuid
 fake = Faker()
 Faker.seed(12345)
 
-def generar_nombre_unico(i, prefijo=""):
-    """Genera un nombre único combinando faker con un índice"""
-    return f"{prefijo}{fake.first_name()}_{i}"
+# Lista de nombres de Pokémon reales
+pokemon_names = [
+    "Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard",
+    "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree",
+    "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot",
+    "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok",
+    "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina",
+    "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable",
+    "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat",
+    "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat",
+    "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck",
+    "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag",
+    "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop",
+    "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool",
+    "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash",
+    "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo",
+    "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder",
+    "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee",
+    "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute",
+    "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung",
+    "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela",
+    "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu",
+    "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar",
+    "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto",
+    "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte",
+    "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno",
+    "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"
+]
 
 def generar_csvs():
     # 1. Pokemon
     pokemons = []
     roles = ["Atacante", "Defensor", "Velocista", "Apoyo", "Todo Terreno"]
-    tipos_ataque = ["Físico", "Especial", "Mixto"]
+    tipos_ataque = ["Físico", "Especial"]
     rangos_ataque = ["Corto", "Medio", "Largo"]
     
     for i in range(1000):
         pokemons.append({
-            'nombre': generar_nombre_unico(i, "Pokemon_"),
+            'nombre': pokemon_names[i % len(pokemon_names)],  # Usar nombres de la lista
             'rol': random.choice(roles),
             'tipo_de_ataque': random.choice(tipos_ataque),
             'rango_de_ataque': random.choice(rangos_ataque)
@@ -47,7 +72,7 @@ def generar_csvs():
             'nombre': f"Circulo_{fake.company()}_{i}",
             'descripcion': fake.text(max_nb_chars=200),
             'id': str(uuid.uuid4())[:8],
-            'nmiembros': random.randint(10, 100)
+            'nmiembros': random.randint(1, 30)
         })
     df_circulos = pd.DataFrame(circulos)
     df_circulos.to_csv('circulounite.csv', index=False)
